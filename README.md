@@ -9,25 +9,41 @@ performam dos demais.
 
 ## Principais resultados
 
-Comparação canal a canal entre os 92 bem-sucedidos e os 275 demais. Os p-valores vêm de um teste de permutação
-da diferença de medianas (10.000 embaralhamentos).
+Comparação canal a canal entre os 92 bem-sucedidos e os 275 demais, sempre pela **mediana** de cada grupo.
+Os p-valores vêm de um teste de permutação da diferença de medianas (10.000 embaralhamentos). Como são 7 padrões
+testados ao mesmo tempo, os p-valores foram ajustados pela correção de **Holm–Bonferroni**. **Padrão** = p ajustado
+< 0,05; **tendência** = o resto.
 
-| # | Padrão | Bem-sucedidos | Demais | p-valor |
-|---|---|---|---|---|
-| 1 | **Postam menos**: uploads por semana (mediana) | 0,53 | 2,1 | < 0,001 |
-| 2 | **Títulos mais curtos**: caracteres (mediana) | 66 | 76 | 0,001 |
-| 3 | **Menos "\|" no título**: % dos títulos (mediana) | 5,5% | 23% | 0,04 |
-| 4 | **Menos lives/estreias**: % dos vídeos (média) | 14% | 30% | 0,06 |
-| 5 | **Menos vídeos ultralongos**: % dos vídeos com > 10 h | 10% | 17% | — |
-| 6 | **Canais mais antigos**: idade em anos (mediana) | 7,7 | 5,5 | 0,009 |
-| 7 | **Engajamento proporcional menor**: (likes + comentários) / views | 1,6% | 2,0% | 0,049 |
+### Padrões
+
+| # | Padrão | Bem-sucedidos | Demais | p-valor | p ajustado |
+|---|---|---|---|---|---|
+| 1 | **Postam menos**: uploads por semana | 0,53 | 2,1 | < 0,001 | 0,004 |
+| 2 | **Títulos mais curtos**: caracteres | 66 | 76 | 0,001 | 0,007 |
+| 3 | **Canais mais antigos**: idade em anos | 7,7 | 5,5 | 0,009 | 0,045 |
+
+### Tendências
+
+| # | Tendência | Bem-sucedidos | Demais | p-valor | p ajustado |
+|---|---|---|---|---|---|
+| 4 | **Menos "\|" no título**: % dos títulos | 5,5% | 23% | 0,04 | 0,16 |
+| 5 | **Menos lives/estreias**: % dos vídeos | 1% | 5,7% | 0,06 | 0,16 |
+| 6 | **Engajamento proporcional menor**: (likes + comentários) / views | 1,6% | 2,0% | 0,049 | 0,16 |
+| 7 | **Menos vídeos ultralongos**: % dos vídeos com > 10 h | 0% | 0% | 1,0 | 1,0 |
+
+As tendências apontam na mesma direção, mas a evidência não resiste à correção. No item 7, cerca de 2/3 dos canais
+não têm nenhum vídeo acima de 10 h, então a mediana é 0% nos dois grupos e o teste não detecta diferença. Ela só
+aparece na média: 10% do catálogo dos bem-sucedidos contra 17% dos demais.
+
+O padrão 3 está no limite. A correção cobre os 7 candidatos, não as 12 features exploradas no notebook. Aplicada às 12,
+uploads por semana e tamanho do título continuam significativos, mas a idade do canal não (p ajustado ≈ 0,08).
 
 **O que não diferenciou os grupos:** emojis no título (p = 0,19), ano no título e número total de vídeos.
 O vocabulário também é quase o mesmo: 18 das 20 palavras mais frequentes nos títulos são iguais nos dois grupos.
 
-**Leitura:** o canal de sucesso típico do nicho é antigo, publica pouco (cerca de um vídeo a cada duas semanas),
-usa títulos curtos e diretos e aposta menos em lives e em vídeos de 10 h ou mais. O engajamento proporcional menor
-é coerente com um público grande que usa a música como fundo.
+**Leitura:** o canal de sucesso típico do nicho é antigo, publica pouco (cerca de um vídeo a cada duas semanas) e
+usa títulos curtos e diretos. Há indícios, ainda sem significância, de que ele também usa menos "|" nos títulos e
+faz menos lives.
 
 > São correlações, não causas. Um canal grande pode postar menos *porque* cada vídeo já rende muito, e não o contrário.
 
@@ -63,7 +79,8 @@ usa títulos curtos e diretos e aposta menos em lives e em vídeos de 10 h ou ma
   nicho no título ou nas tags. 367 de 414 canais passaram.
 
 **3. Análise (`notebooks/analysis.ipynb`)**
-- Features de título agregadas **por canal**, para que canais com mais vídeos não pesem mais.
+- Features de vídeo (título, duração, lives) agregadas **por canal**, para que canais com mais vídeos não pesem mais.
+- Teste de permutação da diferença de medianas para cada feature e correção de Holm–Bonferroni nos 7 padrões candidatos.
 - Boxplots, barras, correlação de Spearman e palavras mais frequentes nos títulos de cada grupo.
 
 ## Limitações
